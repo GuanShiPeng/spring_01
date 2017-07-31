@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过构造方法注入属性-->
+    <bean name="user" class="it.heima.domain.User" scope="singleton">
+        <constructor-arg name="user_id" value="1"/>
+        <constructor-arg name="user_age" value="12"/>
+        <constructor-arg name="user_gender" value="男"/>
+    </bean>
+
+    <!--通过getset属性赋值-->
+    <bean name="user_01" class="it.heima.domain.User">
+        <property name="user_id" value="2"/>
+        <property name="user_age" value="13"/>
+        <property name="user_gender" value="男"/>
+        <property name="customer" ref="customer_01"/>
+    </bean>
+
+    <!--通过p标签给属性赋值-->
+    <bean name="user_02" class="it.heima.domain.User" p:user_id="3" p:user_age="14" p:user_gender="女"/>
+
+    <!--如果两个对象属性引用的是同一个bean—name,如果是单例，那引入的是一个对象-->
+    <bean name="customer_01" class="it.heima.domain.Customer" scope="prototype" p:customer_id="1" p:customer_name="张三"/>
+
+    <!--给属性赋值bean-->
+    <bean name="user_03" class="it.heima.domain.User" p:user_id="4" p:user_age="15" p:user_gender="女"
+          p:customer-ref="customer_01"/>
+
+</beans>

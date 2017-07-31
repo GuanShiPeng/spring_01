@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!--<context:component-scan base-package="it.heima"/>-->
+
+	<!--加载配置文件-->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+
+	<!--配置dbpc数据源-->
+	<bean id="dataSourceDBPC" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql:///s04_62"/>
+		<property name="username" value="root"/>
+		<property name="password" value="root"/>
+	</bean>
+
+	<!--配置c3p0数据源-->
+	<bean id="dataSourceC3P0" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClass}"/>
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"/>
+		<property name="user" value="${jdbc.user}"/>
+		<property name="password" value="${jdbc.password}"/>
+	</bean>
+
+	<bean id="account" class="it.heima.serviceimp.AccountService"/>
+
+	<bean id="accountDao" class="it.heima.daoimp.AccountDao">
+		<property name="dataSource" ref="dataSourceC3P0"/>
+	</bean>
+
+	<!--声明事物管理器-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSourceC3P0"/>
+	</bean>
+
+	<!--配置通知类，执行事物的规则-->
+	<tx:advice transaction-manager="transactionManager" id="sw">
+		<tx:attributes>
+			<tx:method name="save*" isolation="DEFAULT" propagation="REQUIRED" timeout="-1" read-only="false"/>
+			<tx:method name="update*" isolation="DEFAULT" propagation="REQUIRED" timeout="-1" read-only="false"/>
+			<tx:method name="delete*" isolation="DEFAULT" propagation="REQUIRED" timeout="-1" read-only="false"/>
+			<tx:method name="find*" isolation="DEFAULT" propagation="SUPPORTS" timeout="-1" read-only="true"/>
+			<tx:method name="get*" isolation="DEFAULT" propagation="SUPPORTS" timeout="-1" read-only="true"/>
+			<tx:method name="account*" isolation="DEFAULT" propagation="REQUIRED" timeout="-1" read-only="false"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<!--aop配置-->
+	<aop:config>
+		<aop:pointcut id="pt1" expression="execution(* it.heima.serviceimp..*.*(..))"/>
+
+		<aop:advisor advice-ref="sw" pointcut-ref="pt1"/>
+	</aop:config>
+
+	<!--<tx:annotation-driven transaction-manager="transactionManager"/>-->
+</beans>

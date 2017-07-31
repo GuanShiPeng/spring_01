@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="applicationContext_01.xml"/>
+
+    <!--复杂类型注入-->
+    <bean name="test" class="it.heima.domain.Text_demo_01">
+        <!--数组注入-->
+        <property name="strings">
+            <list>
+                <value>aaa</value>
+                <value>bbb</value>
+                <value>bbb</value>
+            </list>
+        </property>
+
+        <!--list集合注入-->
+        <property name="list">
+            <list>
+                <value>111</value>
+                <value>222</value>
+                <ref bean="user_03"/>
+            </list>
+        </property>
+
+        <!--map集合注入-->
+        <property name="map">
+            <map>
+                <entry key="qqq" value="uuu"/>
+                <entry key="www" value="ooo"/>
+                <entry key="eee" value-ref="customer_01"/>
+            </map>
+        </property>
+
+        <!--properties类型注入参数-->
+        <property name="properties">
+            <props>
+                <prop key="zz">root</prop>
+                <prop key="xx">1234</prop>
+            </props>
+        </property>
+
+    </bean>
+</beans>

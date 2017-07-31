@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+<!--    <bean id="customerAopImp" class="it.heima.serviceimp.CustomerAopImp"/>
+
+    配置通知类
+    <bean id="myAspect" class="it.heima.utils.Aspects"/>-->
+
+
+
+<!--<aop:config>
+
+    <aop:pointcut id="save" expression="execution(* it.heima.serviceimp.CustomerAopImp.save(..))"/>
+    <aop:pointcut id="delete" expression="execution(* it.heima.serviceimp.CustomerAopImp.delete(..))"/>
+    <aop:pointcut id="update" expression="execution(* it.heima.serviceimp.CustomerAopImp.update())"/>
+    <aop:pointcut id="find" expression="execution(* it.heima.serviceimp.CustomerAopImp.find())"/>
+    <aop:pointcut id="findAll" expression="execution(* it.heima.serviceimp.CustomerAopImp.findAll())"/>
+
+    <aop:aspect ref="myAspect">
+        <aop:before method="before" pointcut-ref="save"/>  &lt;!&ndash;在方法执行之前执行&ndash;&gt;
+        <aop:after-returning method="after_returning" pointcut-ref="delete" returning="res"/>   &lt;!&ndash;在方法执行后执行&ndash;&gt;
+        <aop:around method="around" pointcut-ref="update"/> &lt;!&ndash;环绕执行&ndash;&gt;
+        <aop:after-throwing method="after_throwing" pointcut-ref="find" throwing="ex"/> &lt;!&ndash;报错后执行&ndash;&gt;
+        <aop:after method="after" pointcut-ref="findAll"/>
+    </aop:aspect>
+
+</aop:config>-->
+
+</beans>
